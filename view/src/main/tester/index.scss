@@ -1,0 +1,97 @@
+.me-template {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content repeat(10, 1fr);
+    gap: 5px 5px;
+    grid-template-areas:
+        "gramar"
+        "content";
+    > .gramar {
+        grid-area: gramar;
+    }
+    > .content {
+        grid-area: content;
+        > .case {
+            display: grid;
+            grid-template-columns: 1fr min-content;
+            grid-template-rows: min-content min-content;
+            gap: 0px 0px;
+            grid-template-areas:
+                "title actions"
+                "content actions";
+            //border: 2px solid antiquewhite;
+            margin-bottom: 5px;
+            > .input-title {
+                grid-area: title;
+                display: grid;
+                border: 0;
+                padding: 4px 6px;
+                outline: none;
+                //background-color: antiquewhite;
+                cursor: pointer;
+                &:hover,
+                &:focus {
+                    border: 0;
+                }
+            }
+            > .actions {
+                grid-area: actions;
+                //background-color: antiquewhite;
+                padding: 5px 10px;
+                .btn {
+                    width: 100%;
+                    margin-bottom: 5px;
+                }
+            }
+            > .content {
+                min-height: 80px;
+                grid-area: content;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: min-content;
+                gap: 5px 0px;
+                grid-template-areas:
+                    "input"
+                    "output";
+                > .textarea-input {
+                    grid-area: input;
+                    resize: none;
+                    overflow: hidden;
+                    padding: 5px 10px;
+                    border: 0;
+                    outline: none;
+                }
+                > .output {
+                    grid-area: output;
+                    padding: 5px 10px;
+                    //border-top: 1px dotted antiquewhite;
+                    > .result {
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.me-templatex {
+    > div {
+        margin: 1px 5px;
+        border: 1px solid red;
+        > div {
+            padding: 0px;
+            border: 0px solid blue;
+            > div {
+                padding: 2px 5px;
+                border: 0px solid green;
+                > div {
+                    padding: 10px;
+                    border: 0px solid orange;
+                }
+            }
+            > .content_ {
+                display: none !important;
+            }
+        }
+    }
+}

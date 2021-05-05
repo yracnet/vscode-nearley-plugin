@@ -1,5 +1,11 @@
-// Custom Bootstrap Colors
-@import "_/themes/variables.scss";
+@import "_/icon/css/fontello.css";
+
+// Custom colors
+@import "_/themes/var-color.scss";
+@import "_/themes/var-slim.scss";
+
+@import "_/themes/bootstrap.scss";
 
 // Custom Rules
 @import "_/themes/custom.scss";
+@import "./tester/index.scss";

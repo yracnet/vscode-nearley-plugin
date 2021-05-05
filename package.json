@@ -1,5 +1,5 @@
 {
-  "name": "nearley-plugin",
+	"name": "nearley-plugin",
 	"displayName": "nearley-plugin",
 	"description": "",
 	"version": "0.0.1",
@@ -10,14 +10,28 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:nearley-plugin.helloWorld"
+		"onCommand:nearley-plugin.ne-compiler",
+		"onCommand:nearley-plugin.ne-tester"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "nearley-plugin.helloWorld",
-				"title": "Hello World"
+				"category": "Nearley",
+				"command": "nearley-plugin.ne-compiler",
+				"title": "Nearley Compiler Grammar"
+			},
+			{
+				"category": "Nearley",
+				"command": "nearley-plugin.ne-tester",
+				"title": "Nearley Tester Grammar"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "nearley-plugin.ne-compiler",
+				"key": "Ctrl+Enter",
+				"when": "editorTextFocus"
 			}
 		]
 	},
