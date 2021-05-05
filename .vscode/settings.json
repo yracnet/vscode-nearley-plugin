@@ -1,0 +1,14 @@
+{
+    "files.exclude": {
+        "**/.eslintrc.json": true,
+        "**/.vscodeignore": true,
+        "**/.yarnrc": true,
+        "**/*.md": true,
+        "**/yarn.lock": true,
+        "**/out": false
+    },
+    "search.exclude": {
+        "out": true
+    },
+    "typescript.tsc.autoDetect": "off"
+}
