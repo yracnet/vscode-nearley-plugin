@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { createReactInfo, ReactInfo } from './util';
+import { createReactInfo, ReactInfo, parseJson } from './util';
 
 
 
@@ -15,18 +15,10 @@ class ReactEditorProvider implements vscode.CustomTextEditorProvider {
     constructor(private readonly config: ReactInfo) { }
     public async resolveCustomTextEditor(document: vscode.TextDocument, panel: vscode.WebviewPanel, _token: vscode.CancellationToken): Promise<void> {
         const view = panel.webview;
-        const { content = 'Error Load', parentUri, manifest } = this.config;
-
+        const { content = 'Error Load', parentUri } = this.config;
         const webviewParentUri = view.asWebviewUri(parentUri)
-
-        //console.log('parentUri-->', parentUri);
-        //console.log('content-->', content);
-        //view.html = '<h1>CONFIG REACT</h1><code><pre>' + JSON.stringify(this.config, null, 2) + '</pre></code>'
-
         view.html = content.replace(/VSCODE_ROOT_URI/g, webviewParentUri.toString());
-        console.log('view.html-->', view.html);
-
-
+        //console.log('view.html-->', view.html);
         view.options = {
             enableScripts: true,
             localResourceRoots: [
@@ -35,8 +27,32 @@ class ReactEditorProvider implements vscode.CustomTextEditorProvider {
             ]
         };
 
-        //const controller = createController(document, panel);
-        //controller.refresh();
+
+        const reloadContent = () => {
+            parseJson(document.getText())
+                .then(content => {
+                    view.postMessage({ type: 'set-state', content })
+                })
+                .catch(error => {
+                    vscode.window.showErrorMessage('Content file no is JSON format: ' + error);
+                })
+        }
+
+
+        const ___changeFile = vscode.workspace.onDidChangeTextDocument(e => {
+            if (e.document.uri.toString() === document.uri.toString()) {
+                reloadContent();
+            }
+        });
+
+        panel.onDidDispose(() => {
+            ___changeFile.dispose();
+        });
+
+        view.onDidReceiveMessage(e => {
+            console.log('Received=================>', e);
+        });
+        reloadContent();
     }
 }
 

@@ -1,10 +1,12 @@
 {
     "files.exclude": {
+        "node_modules": true,
         "**/.eslintrc.json": true,
         "**/.vscodeignore": true,
         "**/.yarnrc": true,
         "**/*.md": true,
         "**/yarn.lock": true,
+        "**/view": true,
         "**/out": false
     },
     "search.exclude": {

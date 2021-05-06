@@ -39,6 +39,18 @@ export const readFile = (file: string, encode: string) => {
     });
 }
 
+export const parseJson = (content: string) => {
+    return new Promise<any>((resolve, reject) => {
+        console.log('Parse Json: ', content);
+        try {
+            const data = JSON.parse(content);
+            resolve(data);
+        } catch (error) {
+            reject(error)
+        }
+    });
+}
+
 export type ReactInfo = {
     parentUri: vscode.Uri,
     fileUri: vscode.Uri,

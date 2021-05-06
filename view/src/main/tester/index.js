@@ -1,38 +1,20 @@
-import { useState } from 'react';
 import { ObjectInspector } from 'react-inspector';
-import { handlerList, handlerOnKey } from '_/helpers/handler'
+import { handlerOnKey } from '_/helpers/handler'
+import { useConfigHandler } from "_/hooks/useConfigHandler"
 
-const TEST = {
-  id: 0,
-  name: 'Test-0',
-  content: '1+1',
-  result: []
-}
-const INIT = {
+const INIT_TEST = {
   grammar: 'aaa.js',
   compiled: '01/01/01',
   hash: '00000001111',
   active: 0,
-  tests: [TEST]
+  tests: []
 }
 
 export const Tester = () => {
-  const [config, setConfig] = useState(INIT);
+  const [config, , event] = useConfigHandler(INIT_TEST);
 
-  const setConfigTest = (setTest) => {
-    setConfig(state => {
-      return {
-        ...state,
-        tests: setTest(state.tests)
-      }
-    })
-  }
-
-  const handler = handlerList('id', setConfigTest);
-
-  const onExecute = (e, it) => {
-    it.result = [Math.random(), it.result, Math.random()];
-    handler.update(it);
+  const onExecute = (e, item) => {
+    event.onExecuteTest(item)
   }
 
   const onExecuteKey = handlerOnKey('Ctrl+Enter', onExecute)
@@ -41,17 +23,6 @@ export const Tester = () => {
     const el = e.target;
     el.style.height = 0
     el.style.height = (el.scrollHeight + 15) + 'px'
-
-  }
-
-  const onActive = (ix) => {
-    setConfig(state => {
-      return { ...state, active: ix }
-    })
-  }
-  const onAppend = () => {
-    handler.append(TEST)
-    onActive(0);
   }
 
   return (
@@ -64,10 +35,10 @@ export const Tester = () => {
           <input className="form-control bg-white" value={config.hash} readOnly />
           <span className="input-group-text" id="basic-addon2">Compiled</span>
           <input className="form-control bg-white" value={config.compiled} readOnly />
-          <button onClick={onAppend}
+          <button onClick={e => event.onCreateTest()}
             className="btn btn-outline-primary">
             <i className="icon-plus" />
-            Add Test Case
+            Add Test
           </button>
         </div>
       </div>
@@ -75,15 +46,15 @@ export const Tester = () => {
         {
           config.tests.map((it, ix) => (
             <div className="case card"
-              onClick={e => onActive(ix)}
               key={'case-' + it.id}>
               <input
-                name={ix + '.name'}
+                name={'tests.' + ix + '.name'}
                 value={it.name}
-                onChange={handler.onChange}
+                onChange={event.onChange}
+                onClick={e => event.onActiveTest(it)}
                 className="input-title card-header text-dark" />
 
-              {config.active === ix &&
+              {config.active === it.id &&
                 <>
                   <div className="actions card-footer">
                     <button onClick={e => onExecute(e, it)}
@@ -91,7 +62,7 @@ export const Tester = () => {
                       <i className="icon-run" />
                       Ejecute
                     </button>
-                    <button onClick={e => handler.remove(it)}
+                    <button onClick={e => event.onRemoveTest(it)}
                       className="btn btn-sm btn-outline-danger">
                       <i className="icon-trash" />
                       Remove
@@ -105,9 +76,9 @@ export const Tester = () => {
                   </div>
                   <div className="content">
                     <textarea
-                      name={ix + '.content'}
+                      name={'tests.' + ix + '.content'}
                       value={it.content}
-                      onChange={handler.onChange}
+                      onChange={event.onChange}
                       onKeyUp={e => onExecuteKey(e, it)}
                       onKeyDown={resizeHeight}
                       className="textarea-input"
