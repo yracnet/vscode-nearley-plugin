@@ -10,26 +10,38 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:nearley-plugin.ne-compiler",
-		"onCommand:nearley-plugin.ne-tester"
+		"onCustomEditor:nearley-plugin.ne-run-tester",
+		"onCommand:nearley-plugin.ne-cmd-compiler",
+		"onCommand:nearley-plugin.ne-cmd-tester"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"customEditors": [
+			{
+				"viewType": "nearley-plugin.ne-run-tester",
+				"displayName": "Nearley Run Test",
+				"selector": [
+					{
+						"filenamePattern": "*.ne.test"
+					}
+				]
+			}
+		],
 		"commands": [
 			{
 				"category": "Nearley",
-				"command": "nearley-plugin.ne-compiler",
+				"command": "nearley-plugin.ne-cmd-compiler",
 				"title": "Nearley Compiler Grammar"
 			},
 			{
 				"category": "Nearley",
-				"command": "nearley-plugin.ne-tester",
+				"command": "nearley-plugin.ne-cmd-tester",
 				"title": "Nearley Tester Grammar"
 			}
 		],
 		"keybindings": [
 			{
-				"command": "nearley-plugin.ne-compiler",
+				"command": "nearley-plugin.ne-cmd-compiler",
 				"key": "Ctrl+Enter",
 				"when": "editorTextFocus"
 			}

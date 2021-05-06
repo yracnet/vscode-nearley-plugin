@@ -1,11 +1,8 @@
-@import "_/icon/css/fontello.css";
+// Custom Bootstrap with colors
+@import "_/scss/bootstrap.scss";
 
-// Custom colors
-@import "_/themes/var-color.scss";
-@import "_/themes/var-slim.scss";
+// Custom Components
+@import "_/scss/bootstrap-extend.scss";
 
-@import "_/themes/bootstrap.scss";
-
-// Custom Rules
-@import "_/themes/custom.scss";
+// Custom Tester Template
 @import "./tester/index.scss";

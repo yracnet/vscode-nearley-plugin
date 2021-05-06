@@ -2,12 +2,20 @@ import { useState } from 'react';
 import { ObjectInspector } from 'react-inspector';
 import { handlerList, handlerOnKey } from '_/helpers/handler'
 
+const TEST = {
+  id: 0,
+  name: 'Test-0',
+  content: '1+1',
+  result: []
+}
 const INIT = {
   grammar: 'aaa.js',
+  compiled: '01/01/01',
   hash: '00000001111',
   active: 0,
-  tests: [{ id: '0', name: 'Test-0', content: '1+1' }]
+  tests: [TEST]
 }
+
 export const Tester = () => {
   const [config, setConfig] = useState(INIT);
 
@@ -42,7 +50,7 @@ export const Tester = () => {
     })
   }
   const onAppend = () => {
-    handler.append({ name: 'Test-' + config.tests.length, content: "1+2", result: [] })
+    handler.append(TEST)
     onActive(0);
   }
 
@@ -54,10 +62,10 @@ export const Tester = () => {
           <input className="form-control bg-white" value={config.grammar} readOnly />
           <span className="input-group-text" id="basic-addon2">Hash</span>
           <input className="form-control bg-white" value={config.hash} readOnly />
-          <span className="input-group-text" id="basic-addon2">Date</span>
-          <input className="form-control bg-white" value={config.hash} readOnly />
+          <span className="input-group-text" id="basic-addon2">Compiled</span>
+          <input className="form-control bg-white" value={config.compiled} readOnly />
           <button onClick={onAppend}
-            className="btn btn-sm btn-primary">
+            className="btn btn-outline-primary">
             <i className="icon-plus" />
             Add Test Case
           </button>
@@ -78,18 +86,22 @@ export const Tester = () => {
               {config.active === ix &&
                 <>
                   <div className="actions card-footer">
-                    <button onClick={e => handler.remove(it)}
-                      className="btn btn-sm btn-danger">
-                      <i className="icon-trash" />
-                      Remove
-                    </button>
                     <button onClick={e => onExecute(e, it)}
-                      className="btn btn-sm btn-primary">
+                      className="btn btn-outline-primary">
                       <i className="icon-run" />
                       Ejecute
                     </button>
-                    <i className="icon-2x icon-ok text-success" />
-                    <i className="icon-2x icon-error text-danger" />
+                    <button onClick={e => handler.remove(it)}
+                      className="btn btn-sm btn-outline-danger">
+                      <i className="icon-trash" />
+                      Remove
+                    </button>
+                    <div className="case-status bg-success">
+                      <i className="icon-ok text-white" />
+                    </div>
+                    <div className="case-status bg-danger">
+                      <i className="icon-error text-white" />
+                    </div>
                   </div>
                   <div className="content">
                     <textarea

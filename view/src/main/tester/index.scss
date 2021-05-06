@@ -14,12 +14,11 @@
         > .case {
             display: grid;
             grid-template-columns: 1fr min-content;
-            grid-template-rows: min-content min-content;
+            grid-template-rows: 23px min-content;
             gap: 0px 0px;
             grid-template-areas:
                 "title actions"
                 "content actions";
-            //border: 2px solid antiquewhite;
             margin-bottom: 5px;
             > .input-title {
                 grid-area: title;
@@ -27,7 +26,7 @@
                 border: 0;
                 padding: 4px 6px;
                 outline: none;
-                //background-color: antiquewhite;
+                font-weight: bold;
                 cursor: pointer;
                 &:hover,
                 &:focus {
@@ -36,11 +35,20 @@
             }
             > .actions {
                 grid-area: actions;
-                //background-color: antiquewhite;
                 padding: 5px 10px;
-                .btn {
-                    width: 100%;
-                    margin-bottom: 5px;
+                .case-status {
+                    width: 20px;
+                    height: 20px;
+                    font-size: 20px;
+                    margin: 0 auto;
+                    padding: 10px;
+                    border-radius: 50%;
+                    position: relative;
+                    i::before {
+                        position: absolute;
+                        margin: -1px -1px;
+                        padding: 0px;
+                    }
                 }
             }
             > .content {
@@ -64,7 +72,6 @@
                 > .output {
                     grid-area: output;
                     padding: 5px 10px;
-                    //border-top: 1px dotted antiquewhite;
                     > .result {
                         margin-bottom: 10px;
                     }
@@ -74,7 +81,7 @@
     }
 }
 
-.me-templatex {
+.me-template-trace {
     > div {
         margin: 1px 5px;
         border: 1px solid red;

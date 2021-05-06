@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-process.env.PUBLIC_URL = './'
+process.env.PUBLIC_URL = 'VSCODE_ROOT_URI/'
 process.env.BUILD_PATH = '../media'
 
 const rewire = require("rewire");
