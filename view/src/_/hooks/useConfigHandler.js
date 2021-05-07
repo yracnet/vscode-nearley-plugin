@@ -55,9 +55,9 @@ export const useConfigHandler = (init = INIT_TEST) => {
             id: 'TEST-' + new Date().getTime() + ':' + config.tests.length,
             name: 'Simple Test',
             content: "10 + " + Math.random(),
-            start: '?',
-            finish: '?',
-            status: '?',
+            start: '',
+            finish: '',
+            status: '',
             results: ['Ctrl+Enter for ejecute this case'],
             error: ''
         }

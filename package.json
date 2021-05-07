@@ -11,8 +11,7 @@
 	],
 	"activationEvents": [
 		"onCustomEditor:nearley-plugin.ne-run-tester",
-		"onCommand:nearley-plugin.ne-cmd-compiler",
-		"onCommand:nearley-plugin.ne-cmd-tester"
+		"onCommand:nearley-plugin.ne-cmd-compiler"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -22,7 +21,7 @@
 				"displayName": "Nearley Run Test",
 				"selector": [
 					{
-						"filenamePattern": "*.ne.test"
+						"filenamePattern": "*.ne-test"
 					}
 				]
 			}
@@ -32,11 +31,6 @@
 				"category": "Nearley",
 				"command": "nearley-plugin.ne-cmd-compiler",
 				"title": "Nearley Compiler Grammar"
-			},
-			{
-				"category": "Nearley",
-				"command": "nearley-plugin.ne-cmd-tester",
-				"title": "Nearley Tester Grammar"
 			}
 		],
 		"keybindings": [
@@ -56,16 +50,20 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.55.0",
 		"@types/glob": "^7.1.3",
 		"@types/mocha": "^8.0.4",
 		"@types/node": "^12.11.7",
-		"eslint": "^7.19.0",
+		"@types/vscode": "^1.55.0",
 		"@typescript-eslint/eslint-plugin": "^4.14.1",
 		"@typescript-eslint/parser": "^4.14.1",
+		"eslint": "^7.19.0",
 		"glob": "^7.1.6",
 		"mocha": "^8.2.1",
 		"typescript": "^4.1.3",
 		"vscode-test": "^1.5.0"
+	},
+	"dependencies": {
+		"moo": "^0.5.1",
+		"nearley": "^2.20.1"
 	}
 }

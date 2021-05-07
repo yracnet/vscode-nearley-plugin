@@ -86,7 +86,7 @@ export const Tester = () => {
                       value={it.content}
                       onChange={event.onChange}
                       rows={1}
-                      onKeyUp={e => onExecuteKey(e, it.id)}
+                      onKeyDown={e => onExecuteKey(e, it.id)}
                       onKeyUp={resizeHeight}
                       className="textarea-input"
                       title="Ctrl+Enter for execute this case test" />
@@ -98,7 +98,7 @@ export const Tester = () => {
                           </div>
                         ))
                       }
-                      <pre className="error text-danger">{it.error}</pre>
+                      <pre className="error text-danger" onClick={e => e.target.classList.toggle('expand')}>{it.error}</pre>
                     </code>
                   </div>
                 </>

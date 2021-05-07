@@ -84,6 +84,9 @@
                         padding: 0;
                         max-height: 80px;
                         overflow: auto;
+                        &.expand {
+                            max-height: 100%;
+                        }
                     }
                 }
             }

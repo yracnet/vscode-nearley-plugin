@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from "path"
+import { getVscodeTerminal, assertFileTest } from './util';
 
-const TITLE_TERMINAL = "Nearley Compiler";
 
 const commandIdCompiler = 'nearley-plugin.ne-cmd-compiler';
 
@@ -22,15 +22,13 @@ export const registerCmdCompiler = (context: vscode.ExtensionContext) => {
             } else {
                 console.log('Nearley Compile: ', fileName);
                 document.save();
-                let terminal = vscode.window.terminals.find(it => it.name === TITLE_TERMINAL);
-                if (!terminal) {
-                    terminal = vscode.window.createTerminal(TITLE_TERMINAL);
-                }
+                const terminal = getVscodeTerminal();
                 terminal.show(true);
-                terminal.sendText(`clear`);
                 terminal.sendText(`cd ${file.dir}`);
+                terminal.sendText(`clear`);
                 terminal.sendText(`rm ${file.name}.js`);
                 terminal.sendText(`nearleyc ${file.base} -o ${file.name}.js`)
+                assertFileTest(document.fileName);
             }
         }
     });
