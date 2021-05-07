@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-process.env.PUBLIC_URL = 'VSCODE_ROOT_URI/'
+process.env.PUBLIC_URL = '/VSCODE_ROOT_URI/'
 process.env.BUILD_PATH = '../media'
 
 const rewire = require("rewire");
@@ -10,6 +10,7 @@ const glob = require('glob-all')
 
 let config = defaults.__get__("config");
 
+config.optimization.minimize = false;
 config.optimization.splitChunks = false;
 config.optimization.runtimeChunk = false;
 

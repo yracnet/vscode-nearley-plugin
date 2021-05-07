@@ -22,32 +22,32 @@ export const handlerList = (key = 'id', setState) => {
     }
 
 }
-export const handlerOnChange = (setState) => {
+const FN_ID = (state) => state
+
+export const handlerOnChange = (state, setState, postChange = FN_ID) => {
     return ({ target }) => {
         const { name, value } = target;
         if (!name || name === '.') {
             console.warn('Target element requiere name attribute', target);
         } else if (name.includes('.')) {
+            let newState = Array.isArray(state) ? [...state] : { ...state }
+            let ref = newState;
             const keys = name.split('.');
             const key = keys.pop();
-            setState(state => {
-                const newState = Array.isArray(state) ? [...state] : { ...state }
-                let ref = newState
-                keys.forEach(key => {
-                    if (!ref[key]) {
-                        ref[key] = {}
-                    }
-                    ref = ref[key]
-                });
-                ref[key] = value;
-                return newState;
-            })
+            keys.forEach(key => {
+                if (!ref[key]) {
+                    ref[key] = {};
+                }
+                ref = ref[key];
+            });
+            ref[key] = value;
+            newState = postChange(newState);
+            setState(newState);
         } else {
-            setState(state => {
-                const newState = Array.isArray(state) ? [...state] : { ...state }
-                newState[name] = value;
-                return newState;
-            })
+            let newState = Array.isArray(state) ? [...state] : { ...state }
+            newState[name] = value;
+            newState = postChange(newState);
+            setState(newState);
         }
     }
 }

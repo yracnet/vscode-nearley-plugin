@@ -4,37 +4,41 @@
     grid-template-rows: min-content repeat(10, 1fr);
     gap: 5px 5px;
     grid-template-areas:
-        "gramar"
+        "header"
         "content";
-    > .gramar {
-        grid-area: gramar;
+    > .header {
+        grid-area: header;
     }
     > .content {
         grid-area: content;
         > .case {
             display: grid;
             grid-template-columns: 1fr min-content;
-            grid-template-rows: 23px min-content;
+            grid-template-rows: min-content min-content;
             gap: 0px 0px;
             grid-template-areas:
-                "title actions"
-                "content actions";
+                "title title"
+                "content status";
             margin-bottom: 5px;
-            > .input-title {
+            > .title {
                 grid-area: title;
                 display: grid;
-                border: 0;
-                padding: 4px 6px;
-                outline: none;
                 font-weight: bold;
                 cursor: pointer;
-                &:hover,
-                &:focus {
+                .input-group {
+                    cursor: pointer;
+                    margin: 0;
+                    padding: 0;
                     border: 0;
+                    input {
+                        cursor: pointer;
+                        border: 0;
+                        outline: none;
+                    }
                 }
             }
-            > .actions {
-                grid-area: actions;
+            > .status {
+                grid-area: status;
                 padding: 5px 10px;
                 .case-status {
                     width: 20px;
@@ -57,7 +61,7 @@
                 display: grid;
                 grid-template-columns: 1fr;
                 grid-template-rows: min-content;
-                gap: 5px 0px;
+                gap: 0px 0px;
                 grid-template-areas:
                     "input"
                     "output";
@@ -65,7 +69,7 @@
                     grid-area: input;
                     resize: none;
                     overflow: hidden;
-                    padding: 5px 10px;
+                    padding: 5px 10px 0px 10px;
                     border: 0;
                     outline: none;
                 }
@@ -74,6 +78,13 @@
                     padding: 5px 10px;
                     > .result {
                         margin-bottom: 10px;
+                    }
+                    > .error {
+                        border: 0;
+                        margin: 0;
+                        padding: 0;
+                        max-height: 80px;
+                        overflow: auto;
                     }
                 }
             }
