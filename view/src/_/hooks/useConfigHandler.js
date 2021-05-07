@@ -65,7 +65,8 @@ export const useConfigHandler = (init = INIT_TEST) => {
         setConfig({ ...config, execute: item.id, tests, origin: 'react' })
     }
     const onActiveTest = (item) => {
-        const execute = typeof item === 'string' ? item : item.id;
+        const id = typeof item === 'string' ? item : item.id;
+        const execute = (id === config.execute ? '' : id)
         setConfig({ ...config, execute, origin: 'react' })
     }
     const onRemoveTest = (item) => {
@@ -78,7 +79,8 @@ export const useConfigHandler = (init = INIT_TEST) => {
         const tests = config.tests.map(it => it.id === item.id ? item : it)
         setConfig({ ...config, tests, origin: 'react' })
     }
-    const onExecuteTest = (execute) => {
+    const onExecuteTest = (item) => {
+        const execute = typeof item === 'string' ? item : item.id;
         setConfig({ ...config, execute, origin: 'ignore' })
         sendMessage('execute-test', { ...config, execute })
     }
