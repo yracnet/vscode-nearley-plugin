@@ -4,7 +4,7 @@
         "**/.eslintrc.json": true,
         "**/.vscodeignore": true,
         "**/.yarnrc": true,
-        "**/*.md": true,
+        "**/*.md": false,
         "**/yarn.lock": true,
         "**/view": true,
         "**/out": false
