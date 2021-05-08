@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { assertScript, createReactInfo, generateTempFile, readFile, parseJson, getVscodeTerminal } from './util';
+import { assertBinScript, createReactInfo, parseJson, getVscodeTerminal } from './util';
 import { ProcessCallback, ReactEditorProvider } from './ReactEditorProvider';
 
 
@@ -29,12 +29,12 @@ export const registerRunTester = (context: vscode.ExtensionContext) => {
             .then(() => {
                 const fileName = vscode.workspace.asRelativePath(document.fileName);
                 console.log('Nearley Run Test: ', fileName);
-                const projectPath = assertScript('ne.js', context)
+                const projectPath = assertBinScript('ne-test', context)
                 const terminal = getVscodeTerminal();
                 terminal.show(true)
                 terminal.sendText(`cd ${projectPath}`)
                 terminal.sendText(`clear`)
-                terminal.sendText(`node ne.js './${fileName}' './${fileName}'`)
+                terminal.sendText(`ne-test './${fileName}' './${fileName}'`)
             }, () => {
                 vscode.window.showErrorMessage('Error on save files test');
             })

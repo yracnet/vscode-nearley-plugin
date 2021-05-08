@@ -21,13 +21,15 @@ export const assertFileTest = (fileName: string) => {
     }
 }
 
-export const assertScript = (name: string, context: vscode.ExtensionContext) => {
-    const neBash = path.join(vscode.workspace.rootPath || '', name)
-    if (!fs.existsSync(neBash)) {
-        const neOrigin = path.join(context.extensionPath, "bash", name)
-        fs.copyFileSync(neOrigin, neBash)
+export const assertBinScript = (name: string, context: vscode.ExtensionContext) => {
+    const binDir = path.join(vscode.workspace.rootPath || '', 'node_modules', '.bin');
+    const neScript = path.join(binDir, name)
+    if (!fs.existsSync(neScript)) {
+        fs.mkdirSync(binDir, { recursive: true });
+        const neOrigin = path.join(context.extensionPath, "bin", name)
+        fs.copyFileSync(neOrigin, neScript)
     }
-    return path.join(neBash, "..")
+    return path.join(binDir, "..", "..")
 }
 
 export const generateTempFile = () => {
