@@ -40,6 +40,7 @@ export const registerRunTester = (context: vscode.ExtensionContext) => {
             })
     }
     const processChangeText: ProcessCallback = (payload, { document, sendMessage }) => {
+        document.save();
         parseJson(payload)
             .then(data => {
                 sendMessage('reload-state', data)
