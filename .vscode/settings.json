@@ -2,7 +2,7 @@
     "files.exclude": {
         "node_modules": true,
         "**/.eslintrc.json": true,
-        "**/.vscodeignore": true,
+        "**/.vscodeignore": false,
         "**/.yarnrc": true,
         "**/*.md": false,
         "**/yarn.lock": true,

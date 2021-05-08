@@ -11,9 +11,9 @@ Plugin for Nearley Grammar - https://nearley.js.org
     - Generate *ne.js* ejecutor on root project directory
     - Display result on editor
 
-![Compile ne File](./images/compile.png)
+![Compile ne File](images/compile.png)
 
-![Test ne-test File](./images/tester.png)
+![Test ne-test File](images/tester.png)
 
 
 ## Requirements
