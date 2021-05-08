@@ -11,6 +11,7 @@ export const assertFileTest = (fileName: string) => {
         const fileNe = './' + vscode.workspace.asRelativePath(fileName)
         const fileJs = fileNe.replace('.ne', '.js');
         const config = {
+            source: fileNe,
             grammar: fileJs,
             execute: '',
             tests: []
