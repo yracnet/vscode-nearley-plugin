@@ -1,0 +1,126 @@
+#!/usr/bin/env node
+/* 
+ * eg. node bin/ne-test file.ne-test  file.ne-out
+ */
+try {
+    var nearley = require('nearley');
+} catch (e) {
+    console.log('Error: Ne-Test require nearley dependency.  Try running "npm install nearley".')
+    process.exit(1)
+}
+var cp = require('child_process');
+const fs = require('fs');
+const opts = require('commander');
+
+
+//=====================================================================
+
+const actionBuild = (source) => {
+    if (!source.endsWith('.ne')) {
+        console.log('Error: Ne-Build require a file with ".ne" as source.')
+        process.exit(1)
+    }
+    console.log('Build: ', source);
+    const grammar = source.replace('.ne', '.js');
+    const output = source.replace('.ne', '.ne-test');
+    cp.execSync(`nearleyc ${source} -o ${grammar}`, { stdio: 'inherit' })
+    if (!fs.existsSync(output)) {
+        const config = {
+            source,
+            grammar,
+            execute: 'none',
+            tests: [],
+            origin: 'template',
+            create: new Date()
+        }
+        writeFile(config, output);
+    }
+}
+
+const actionRun = (source, output, command) => {
+    if (!source.endsWith('.ne-test')) {
+        console.log('Error: Ne-Run require a file with ".ne-test" as source.')
+        process.exit(1)
+    }
+    const opts = command.opts()
+    output = output ? output : source.replace('.ne-test', '.ne-out')
+    console.log('Source :', source);
+    console.log('Output :', output);
+    console.log('Options:', opts);
+    try {
+        const raw = fs.readFileSync(source);
+        let config = JSON.parse(raw);
+        config = executeRun(config, opts);
+        writeFile(config, output);
+    } catch (error) {
+        console.log('Error: ', error);
+    }
+}
+
+//=====================================================================
+
+const executeRun = (config, opts) => {
+    const { trace } = opts
+    const source = require(config.grammar);
+    const grammar = nearley.Grammar.fromCompiled(source)
+    config.start = new Date();
+    config.tests = config.tests
+        .map(item => {
+            if (item.id === config.execute || config.execute === 'ALL') {
+                const parser = new nearley.Parser(grammar, { keepHistory: trace });
+                console.log('Execute :', item.name);
+                item.start = new Date();
+                item.status = 'success'
+                try {
+                    parser.feed(item.content);
+                    item.results = parser.results
+                    item.traces = trace ? parser.table.map((column, index) => ({
+                        index,
+                        charAt: item.content[index],
+                        items: column.states.map((state, stateIndex) => stateIndex + ": " + state.toString())
+                    })) : []
+                    item.output = ''
+                } catch (error) {
+                    item.status = 'error'
+                    item.output = error.toString()
+                    item.results = []
+                    item.traces = []
+                }
+                console.log('  Status:', item.status);
+                console.log('  Result:', item.results);
+                console.log('  Output:', item.output);
+                console.log('  Traces:', item.traces);
+                //item.results = JSON.stringify(item.results)
+                //item.traces = JSON.stringify(item.traces)
+                item.finish = new Date();
+            }
+            return item;
+        })
+    config.finish = new Date();
+    return config;
+}
+
+const writeFile = (object, output) => {
+    const content = typeof object === 'string' ? object : JSON.stringify(object, null, 2)
+    fs.writeFileSync(output, content)
+}
+
+//=====================================================================
+
+opts.version('0.0.1', '-v, --version')
+
+opts.command('build <source>')
+    .description('Execute command "nearleyc <source>" and generate ne-test file', {
+        source: 'File ne'
+    })
+    .action(actionBuild)
+
+opts.command('run <source> [output]')
+    .option('-t, --trace', 'Enable History Trace', false)
+    .description('Execute ne-test file with nearley', {
+        source: 'File ne-test',
+        output: 'File output result'
+    })
+    .action(actionRun)
+
+opts.parse(process.argv);
