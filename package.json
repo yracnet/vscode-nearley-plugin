@@ -3,7 +3,7 @@
 	"displayName": "Nearley Plugin",
 	"description": "Nearley compile and test files",
 	"icon": "images/logo.png",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "yracnet",
 	"author": {
 		"name": "Willyams Yujra",
