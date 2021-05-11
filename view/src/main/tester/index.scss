@@ -60,6 +60,8 @@
             }
             > .content {
                 min-height: 80px;
+                width: 100%;
+                overflow: hidden;
                 grid-area: content;
                 display: grid;
                 grid-template-columns: 1fr;

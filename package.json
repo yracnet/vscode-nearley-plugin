@@ -1,7 +1,7 @@
 {
 	"name": "nearley-plugin",
 	"displayName": "Nearley Plugin",
-	"description": "Nearley compile and test files",
+	"description": "Nearley compile and test files - with trace",
 	"icon": "images/logo.png",
 	"version": "0.0.2",
 	"publisher": "yracnet",

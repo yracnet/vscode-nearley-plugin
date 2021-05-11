@@ -2,6 +2,8 @@
 
 Plugin for Nearley Grammar - https://nearley.js.org
 
+![Compile ne File](images/logo.png)
+
 ## Features
 
 - Compile *ne* files with command CTRL + ENTER
@@ -10,6 +12,7 @@ Plugin for Nearley Grammar - https://nearley.js.org
 - Ejecute *ne-test* files with command CTRL + ENTER
     - Generate *ne.js* ejecutor on root project directory
     - Display result on editor
+    - Display trace on editor (history)
 
 ![Compile ne File](images/compile.png)
 
