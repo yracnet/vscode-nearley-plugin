@@ -29,7 +29,7 @@
                     cursor: pointer;
                     padding: 0;
                     border: 0;
-                    input {
+                    input.form-control {
                         cursor: pointer;
                         border: 0;
                         outline: none;
@@ -53,6 +53,10 @@
                         padding: 0px;
                     }
                 }
+                pre{
+                    max-width: 200px;
+                    overflow: auto;
+                }
             }
             > .content {
                 min-height: 80px;
@@ -75,17 +79,23 @@
                 > .output {
                     grid-area: output;
                     padding: 5px 10px;
-                    > .result {
-                        margin-bottom: 10px;
-                    }
-                    > .error {
+                    font-family: monospace;
+                    > pre {
                         border: 0;
-                        margin: 0;
+                        margin: 5px 0;
                         padding: 0;
                         max-height: 80px;
                         overflow: auto;
                         &.expand {
                             max-height: 100%;
+                        }
+                    }
+                    > .trace{
+                        b{
+                            color: #555555;
+                        }
+                        span{
+                            color: #848484;
                         }
                     }
                 }

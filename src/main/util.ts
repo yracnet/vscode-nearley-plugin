@@ -3,65 +3,38 @@ import * as fs from 'fs'
 import * as path from "path"
 import * as vscode from 'vscode';
 
-const TITLE_TERMINAL = "Nearley Compiler";
-
-export const assertFileTest = (fileName: string) => {
-    const fileTest = fileName.replace('.ne', '.ne-test');
-    if (!fs.existsSync(fileTest)) {
-        const fileNe = './' + vscode.workspace.asRelativePath(fileName)
-        const fileJs = fileNe.replace('.ne', '.js');
-        const config = {
-            source: fileNe,
-            grammar: fileJs,
-            execute: '',
-            tests: []
-        }
-        const content = JSON.stringify(config)
-        fs.writeFileSync(fileTest, content)
-    }
-}
-
 export const assertBinScript = (name: string, context: vscode.ExtensionContext) => {
-    const binDir = path.join(vscode.workspace.rootPath || '', 'node_modules', '.bin');
-    const neScript = path.join(binDir, name)
+    const binPath = path.join(vscode.workspace.rootPath || '', 'node_modules', '.bin');
+    const neScript = path.join(binPath, name)
     if (!fs.existsSync(neScript)) {
-        fs.mkdirSync(binDir, { recursive: true });
+        fs.mkdirSync(binPath, { recursive: true });
         const neOrigin = path.join(context.extensionPath, "bin", name)
         fs.copyFileSync(neOrigin, neScript)
     }
-    return path.join(binDir, "..", "..")
+    return binPath;
 }
 
-export const generateTempFile = () => {
-    return path.join(os.tmpdir(), 'nearley-test.out');
-}
-export const createTempFile = (content: string) => {
-    const tempPath = path.join(os.tmpdir(), 'nearley-test.txt');
-    fs.writeFileSync(tempPath, content)
-    return tempPath;
-}
+const TITLE_TERMINAL = "Nearley Compiler";
 
 export const getVscodeTerminal = () => {
     let terminal = vscode.window.terminals.find(it => it.name === TITLE_TERMINAL);
     if (!terminal) {
         terminal = vscode.window.createTerminal(TITLE_TERMINAL);
     }
-    //terminal.sendText(`cd ${vscode.workspace.rootPath}`)
-    //terminal.sendText(`clear`)
     return terminal;
 }
 
-export const existFile = (file: string) => {
-    return new Promise<string | any>((resolve, reject) => {
-        //console.debug('Exist File: ', file);
-        const exist = fs.existsSync(file)
-        if (exist) {
-            resolve(file);
-        } else {
-            reject(file)
-        }
-    });
-}
+// export const existFile = (file: string) => {
+//     return new Promise<string | any>((resolve, reject) => {
+//         //console.debug('Exist File: ', file);
+//         const exist = fs.existsSync(file)
+//         if (exist) {
+//             resolve(file);
+//         } else {
+//             reject(file)
+//         }
+//     });
+// }
 
 export const readFile = (file: string, encode: string = 'utf-8') => {
     return new Promise<string | any>((resolve, reject) => {

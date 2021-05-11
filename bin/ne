@@ -29,7 +29,7 @@ const actionBuild = (source) => {
             source,
             grammar,
             execute: 'none',
-            tests: [],
+            items: [],
             origin: 'template',
             create: new Date()
         }
@@ -37,20 +37,18 @@ const actionBuild = (source) => {
     }
 }
 
-const actionRun = (source, output, command) => {
+const actionRun = (source, output) => {
     if (!source.endsWith('.ne-test')) {
         console.log('Error: Ne-Run require a file with ".ne-test" as source.')
         process.exit(1)
     }
-    const opts = command.opts()
     output = output ? output : source.replace('.ne-test', '.ne-out')
     console.log('Source :', source);
     console.log('Output :', output);
-    console.log('Options:', opts);
     try {
         const raw = fs.readFileSync(source);
         let config = JSON.parse(raw);
-        config = executeRun(config, opts);
+        config = executeRun(config);
         writeFile(config, output);
     } catch (error) {
         console.log('Error: ', error);
@@ -59,25 +57,24 @@ const actionRun = (source, output, command) => {
 
 //=====================================================================
 
-const executeRun = (config, opts) => {
-    const { trace } = opts
+const executeRun = (config) => {
     const source = require(config.grammar);
     const grammar = nearley.Grammar.fromCompiled(source)
     config.start = new Date();
-    config.tests = config.tests
+    config.items = config.items
         .map(item => {
             if (item.id === config.execute || config.execute === 'ALL') {
-                const parser = new nearley.Parser(grammar, { keepHistory: trace });
+                const parser = new nearley.Parser(grammar, { keepHistory: item.trace });
                 console.log('Execute :', item.name);
                 item.start = new Date();
                 item.status = 'success'
                 try {
                     parser.feed(item.content);
                     item.results = parser.results
-                    item.traces = trace ? parser.table.map((column, index) => ({
+                    item.traces = item.trace ? parser.table.map((column, index) => ({
                         index,
                         charAt: item.content[index],
-                        items: column.states.map((state, stateIndex) => stateIndex + ": " + state.toString())
+                        rules: column.states.map((state, stateIndex) => stateIndex + ": " + state.toString())
                     })) : []
                     item.output = ''
                 } catch (error) {
@@ -93,6 +90,7 @@ const executeRun = (config, opts) => {
                 //item.results = JSON.stringify(item.results)
                 //item.traces = JSON.stringify(item.traces)
                 item.finish = new Date();
+                //item.delay = item.finish - item.start
             }
             return item;
         })
@@ -116,7 +114,6 @@ opts.command('build <source>')
     .action(actionBuild)
 
 opts.command('run <source> [output]')
-    .option('-t, --trace', 'Enable History Trace', false)
     .description('Execute ne-test file with nearley', {
         source: 'File ne-test',
         output: 'File output result'

@@ -2,7 +2,7 @@
   "source": "./test/calc.ne",
   "grammar": "./test/calc.js",
   "execute": "ALL",
-  "tests": [
+  "items": [
     {
       "id": "TEST-1620651288771:1",
       "name": "x1",
@@ -12,6 +12,9 @@
       "status": "",
       "results": [
         "Ctrl+Enter for ejecute this case"
+      ],
+  "trace": true,
+      "traces": [
       ],
       "error": ""
     },
@@ -24,6 +27,9 @@
       "status": "",
       "results": [
         "Ctrl+Enter for ejecute this case"
+      ],
+  "trace": true,
+      "traces": [
       ],
       "error": ""
     }

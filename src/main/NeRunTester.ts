@@ -27,16 +27,15 @@ export const registerRunTester = (context: vscode.ExtensionContext) => {
         processChangeState(payload, args);
         document.save()
             .then(() => {
-                const fileName = vscode.workspace.asRelativePath(document.fileName);
-                console.log('Nearley Run Test: ', fileName);
-                const projectPath = assertBinScript('ne-test', context)
+                const fileName = document.fileName;
+                const scriptPath = assertBinScript('ne', context)
                 const terminal = getVscodeTerminal();
                 terminal.show(true)
-                terminal.sendText(`cd ${projectPath}`)
+                terminal.sendText(`cd ${scriptPath}`)
                 terminal.sendText(`clear`)
-                terminal.sendText(`ne-test './${fileName}' './${fileName}'`)
+                terminal.sendText(`node ne run '${fileName}' '${fileName}' `)
             }, () => {
-                vscode.window.showErrorMessage('Error on save files test');
+                vscode.window.showErrorMessage('Error on save file test');
             })
     }
     const processChangeText: ProcessCallback = (payload, { document, sendMessage }) => {

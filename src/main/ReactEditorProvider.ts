@@ -45,6 +45,7 @@ export class ReactEditorProvider implements vscode.CustomTextEditorProvider {
             view,
             panel,
             sendMessage: (type, payload) => {
+                //const data = typeof payload === 'string' ? payload : JSON.stringify(payload)
                 console.log('VSCODE:sendMessage: ', type, payload);
                 view.postMessage({ type, payload })
             }
@@ -54,6 +55,7 @@ export class ReactEditorProvider implements vscode.CustomTextEditorProvider {
             this.processEvent
                 .filter(it => it.type === type)
                 .forEach(it => {
+                    //const data = typeof payload === 'string' ? payload : JSON.stringify(payload)
                     console.log('VSCODE:receiveMessage: ', type, payload);
                     it.callback(payload, pContext);
                 })

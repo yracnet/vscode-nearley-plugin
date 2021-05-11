@@ -2,13 +2,16 @@ import { useEffect, useState } from "react"
 import { handlerOnChange } from "_/helpers/handler"
 import { getMessage } from "_/helpers/message"
 
+//import INIT_TEST from './calc.json'
+
 const INIT_TEST = {
     origin: 'default',
+    source: './src/grammar.ne',
     grammar: './src/grammar.js',
-    execute: '?',
-    start: '?',
-    finish: '?',
-    tests: []
+    execute: 0,
+    start: 0,
+    finish: 0,
+    items: []
 }
 
 const [sendMessage, receiveMessage] = getMessage();
@@ -52,17 +55,18 @@ export const useConfigHandler = (init = INIT_TEST) => {
 
     const onCreateTest = () => {
         const item = {
-            id: 'TEST-' + new Date().getTime() + ':' + config.tests.length,
+            id: 'TEST-' + new Date().getTime() + ':' + config.items.length,
             name: 'Simple Test',
             content: "10 + " + Math.random(),
             start: '',
             finish: '',
             status: '',
             results: ['Ctrl+Enter for ejecute this case'],
-            error: ''
+            traces: [],
+            output: ''
         }
-        const tests = [item, ...config.tests]
-        setConfig({ ...config, execute: item.id, tests, origin: 'react' })
+        const items = [item, ...config.items]
+        setConfig({ ...config, execute: item.id, items, origin: 'react' })
     }
     const onActiveTest = (item) => {
         const id = typeof item === 'string' ? item : item.id;
@@ -71,13 +75,13 @@ export const useConfigHandler = (init = INIT_TEST) => {
     }
     const onRemoveTest = (item) => {
         const id = typeof item === 'string' ? item : item.id;
-        const tests = config.tests.filter(it => it.id !== id)
-        setConfig({ ...config, tests, origin: 'react' })
+        const items = config.items.filter(it => it.id !== id)
+        setConfig({ ...config, items, origin: 'react' })
     }
     const onUpdateTest = (item) => {
         item = { ...item }
-        const tests = config.tests.map(it => it.id === item.id ? item : it)
-        setConfig({ ...config, tests, origin: 'react' })
+        const items = config.items.map(it => it.id === item.id ? item : it)
+        setConfig({ ...config, items, origin: 'react' })
     }
     const onExecuteTest = (item) => {
         const execute = typeof item === 'string' ? item : item.id;

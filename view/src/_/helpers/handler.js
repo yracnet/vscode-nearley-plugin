@@ -26,7 +26,8 @@ const FN_ID = (state) => state
 
 export const handlerOnChange = (state, setState, postChange = FN_ID) => {
     return ({ target }) => {
-        const { name, value } = target;
+        const { name, type, value, checked } = target;
+        const valueFinal = type === 'checkbox' ? checked : value
         if (!name || name === '.') {
             console.warn('Target element requiere name attribute', target);
         } else if (name.includes('.')) {
@@ -40,12 +41,12 @@ export const handlerOnChange = (state, setState, postChange = FN_ID) => {
                 }
                 ref = ref[key];
             });
-            ref[key] = value;
+            ref[key] = valueFinal;
             newState = postChange(newState);
             setState(newState);
         } else {
             let newState = Array.isArray(state) ? [...state] : { ...state }
-            newState[name] = value;
+            newState[name] = valueFinal;
             newState = postChange(newState);
             setState(newState);
         }
