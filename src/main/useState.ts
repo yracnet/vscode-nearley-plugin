@@ -1,17 +1,18 @@
+import * as fs from 'fs'
 import * as vscode from 'vscode';
 
-export type HandlerState<T=any> = {
+export type HandlerState<T = any> = {
     state: T,
     setState: (t: T) => void,
-    readState: () => Promise<T | any>,
-    writeState: () => Promise<boolean>
+    readState: () => Promise<T>,
+    writeState: () => Promise<T>
 }
 
 export const useState = <T>(document: vscode.TextDocument, init: T): HandlerState<T> => {
     let state: T = init;
 
-    const readState = (): Promise<T | any> => {
-        return new Promise<any>((resolve, reject) => {
+    const readState = () => {
+        return new Promise<T>((resolve, reject) => {
             try {
                 const text = document.getText()
                 state = <T>JSON.parse(text);
@@ -21,11 +22,15 @@ export const useState = <T>(document: vscode.TextDocument, init: T): HandlerStat
             }
         });
     }
-    const writeState = (): Promise<boolean> => {
-        return new Promise<any>((resolve, reject) => {
+    const writeState = () => {
+        return new Promise<T>((resolve, reject) => {
             const text = JSON.stringify(state, null, 2);
-            document.save()
-                .then(resolve, reject);
+            try {
+                fs.writeFileSync(document.fileName, text, { encoding: 'utf8', flag: 'w' })
+                resolve(state);
+            } catch (error) {
+                reject(error);
+            }
         });
     }
 

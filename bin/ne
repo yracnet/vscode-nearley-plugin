@@ -15,14 +15,15 @@ const opts = require('commander');
 
 //=====================================================================
 
-const actionBuild = (source) => {
+const actionBuild = (source, grammar) => {
     if (!source.endsWith('.ne')) {
         console.log('Error: Ne-Build require a file with ".ne" as source.')
         process.exit(1)
     }
-    console.log('Build: ', source);
-    const grammar = source.replace('.ne', '.js');
-    const output = source.replace('.ne', '.ne-test');
+    grammar = grammar? grammar : source.replace('.ne', '.js');
+    console.log('Source: ', source);
+    console.log('Grammar: ', grammar);
+    const output = grammar.replace('.js', '.ne-test');
     cp.execSync(`nearleyc ${source} -o ${grammar}`, { stdio: 'inherit' })
     if (!fs.existsSync(output)) {
         const config = {
@@ -61,13 +62,14 @@ const actionRun = (source, output) => {
 const executeRun = (config) => {
     const source = require(config.grammar);
     const grammar = nearley.Grammar.fromCompiled(source)
-    config.start = new Date();
+    config.start = Date.now();
     config.items = config.items
         .map(item => {
             if (item.id === config.execute || config.execute === 'ALL') {
                 const parser = new nearley.Parser(grammar, { keepHistory: item.trace });
                 console.log('Execute :', item.name);
-                item.start = new Date();
+                console.log('Content :', item.content);
+                item.start = Date.now();
                 item.status = 'success'
                 try {
                     parser.feed(item.content);
@@ -90,12 +92,13 @@ const executeRun = (config) => {
                 console.log('  Traces:', item.traces);
                 //item.results = JSON.stringify(item.results)
                 //item.traces = JSON.stringify(item.traces)
-                item.finish = new Date();
-                //item.delay = item.finish - item.start
+                item.finish = Date.now();
+                item.time = item.finish - item.start;
             }
             return item;
         })
-    config.finish = new Date();
+    config.finish = Date.now();
+    config.time = config.finish - config.start;
     return config;
 }
 
@@ -108,7 +111,7 @@ const writeFile = (object, output) => {
 
 opts.version('0.0.1', '-v, --version')
 
-opts.command('build <source>')
+opts.command('build <source> [grammar]')
     .description('Execute command "nearleyc <source>" and generate ne-test file', {
         source: 'File ne'
     })

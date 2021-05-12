@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as fs from 'fs'
 import { assertBinScript, createReactInfo, getVscodeTerminal } from './util';
 import { ProcessCallback, ReactEditorProvider } from './ReactEditorProvider';
 
@@ -19,8 +20,7 @@ export const registerRunTester = (context: vscode.ExtensionContext) => {
     const processChangeState: ProcessCallback = (payload, { handler }) => {
         handler.setState(payload);
     }
-    const processExecuteTest: ProcessCallback = async (payload, args) => {
-        const { fileName, handler } = args
+    const processExecuteTest: ProcessCallback = async (payload, { fileName, handler }) => {
         handler.setState(payload);
         handler.writeState()
             .then(() => {
@@ -37,10 +37,9 @@ export const registerRunTester = (context: vscode.ExtensionContext) => {
     }
     const processChangeFile: ProcessCallback = (payload, { handler, sendMessage }) => {
         handler.setState(payload)
-        console.log('------------------', Date.now());
         sendMessage('reload-state', payload)
     }
-    const processBuild: ProcessCallback = (payload, { handler }) => {
+    const processBuild: ProcessCallback = (payload, { fileName, handler }) => {
         handler.setState(payload)
         handler.writeState()
             .then(state => {
@@ -50,6 +49,7 @@ export const registerRunTester = (context: vscode.ExtensionContext) => {
                 terminal.sendText(`cd ${scriptPath}`);
                 terminal.sendText(`clear`);
                 terminal.sendText(`node ne build '${payload.source}' '${payload.grammar}'`);
+                terminal.sendText(`node ne run '${fileName}' '${fileName}' `)
             })
             .catch(error => {
                 vscode.window.showErrorMessage('error ne build');
@@ -57,16 +57,30 @@ export const registerRunTester = (context: vscode.ExtensionContext) => {
     }
 
 
-    const processRunAuto: ProcessCallback = (payload, { handler }) => {
+
+    const processRunAuto: ProcessCallback = (payload, { handler, fileName }) => {
         handler.setState(payload)
         handler.writeState()
             .then(state => {
-                const scriptPath = assertBinScript('ne', context)
                 const terminal = getVscodeTerminal();
-                terminal.show(true);
-                terminal.sendText(`cd ${scriptPath}`);
-                terminal.sendText(`clear`);
-                terminal.sendText(`node ne build '${payload.source}' '${payload.grammar}'`);
+                const scriptPath = assertBinScript('ne', context)
+                if(state.auto){
+                    fs.watchFile(state.source, ()=>{
+                        terminal.show(true);
+                        terminal.sendText(`cd ${scriptPath}`);
+                        terminal.sendText(`clear`);
+                        terminal.sendText(`node ne build '${state.source}' '${state.grammar}'`);
+                    })
+                    fs.watchFile(state.grammar, ()=>{
+                        terminal.show(true);
+                        terminal.sendText(`cd ${scriptPath}`);
+                        terminal.sendText(`clear`);
+                        terminal.sendText(`node ne run '${fileName}' '${fileName}'`);
+                    })
+                } else {
+                    fs.unwatchFile(state.source);
+                    fs.unwatchFile(state.grammar);
+                }
             })
             .catch(error => {
                 vscode.window.showErrorMessage('error ne build');

@@ -13,13 +13,13 @@ export const Tester = () => {
           config.items && config.items.map((item, ix) => (
             <div className="case border"
               key={'case-' + item.id}>
-              <ItemTitle item={item} event={event} prefix={`items.${ix}.`} />
               {(config.execute === item.id || config.execute === 'ALL') &&
                 <>
-                  <ItemStatus item={item} />
                   <ItemContent item={item} event={event} prefix={`items.${ix}.`} />
+                  <ItemStatus item={item} />
                 </>
               }
+              <ItemTitle item={item} event={event} prefix={`items.${ix}.`} />
             </div>
           ))
         }
@@ -48,6 +48,7 @@ const ItemContent = ({ item, event, prefix }) => {
         rows={1}
         onKeyDown={e => onExecuteKey(e, item.id)}
         onKeyUp={resizeHeight}
+        onFocus={resizeHeight}
         className="textarea-input" />
       <code className="output border-top">
         {
@@ -83,17 +84,17 @@ const ItemStatus = ({ item }) => {
   return (
     <div className="status bg-light">
       {
-        item.status === 'success'
-        &&
+        item.status === 'success'?
         <div className="case-status bg-success">
           <i className="icon-ok text-white" />
         </div>
-      }
-      {
-        item.status === 'error'
-        &&
+        : item.status === 'error'?
         <div className="case-status bg-danger">
           <i className="icon-error text-white" />
+        </div>
+        :
+        <div className="case-status">
+          <i className="icon-empty" />
         </div>
       }
     </div>
@@ -110,7 +111,6 @@ const ItemTitle = ({ prefix = '', item, event }) => {
           onChange={event.onChange}
           onClick={e => event.onActiveTest(item)}
           className="form-control bg-light" />
-
         <label className="btn btn-outline-dark">
           <input
             name={prefix + 'trace'}
@@ -128,6 +128,7 @@ const ItemTitle = ({ prefix = '', item, event }) => {
           className="btn btn-sm btn-outline-danger">
           <i className="icon-trash" />
         </button>
+        <span className="time input-group-text bg-warning">{item.time || 0} msec</span>
       </div>
     </div>
   )
@@ -149,10 +150,10 @@ const Header = ({ config, event }) => {
           <i className="icon-build" />
           Build now
         </button>
-        <button onClick={event.onBuildAuto}
-          className="btn btn-outline-primary">
-          <i className={config.auto?  'icon-eye' : 'icon-no-eye' }/>
-          Build auto
+        <button onClick={e => event.onExecuteTest('ALL')}
+          className="btn btn-outline-danger">
+          <i className="icon-run" />
+          Ejecute All
         </button>
       </div>
       <div className="input-group input-group-sm">
@@ -161,16 +162,12 @@ const Header = ({ config, event }) => {
           value={config.grammar}
           onChange={event.onChange}
           className="form-control bg-white" />
-        <button onClick={e => event.onExecuteTest('ALL')}
-          className="btn btn-outline-danger">
-          <i className="icon-run" />
-          Ejecute All
-        </button>
         <button onClick={e => event.onCreateTest()}
           className="btn btn-outline-primary">
           <i className="icon-plus" />
           Add Test
         </button>
+        <span className="time input-group-text bg-warning">{config.time || 0} msec</span>
       </div>
     </div>
   )
