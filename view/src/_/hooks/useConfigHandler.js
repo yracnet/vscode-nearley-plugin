@@ -6,6 +6,7 @@ import { getMessage } from "_/helpers/message"
 
 const INIT_TEST = {
     origin: 'default',
+    auto: false,
     source: './src/grammar.ne',
     grammar: './src/grammar.js',
     execute: 0,
@@ -85,9 +86,18 @@ export const useConfigHandler = (init = INIT_TEST) => {
     }
     const onExecuteTest = (item) => {
         const execute = typeof item === 'string' ? item : item.id;
-        setConfig({ ...config, execute, origin: 'ignore' })
-        sendMessage('execute-test', { ...config, execute })
+        const state = { ...config, execute }
+        setConfig({ ...state, origin: 'ignore' })
+        sendMessage('execute-test', state)
+    }
+    const onBuildNow = () => {
+        sendMessage('build-now', config)
+    }
+    const onBuildAuto = () => {
+        const state = { ...config, auto: !config.auto }
+        setConfig({ ...state, origin: 'ignore' })
+        sendMessage('build-auto', state)
     }
 
-    return [config, setConfig, { onChange, onCreateTest, onActiveTest, onUpdateTest, onRemoveTest, onExecuteTest }];
+    return [config, setConfig, { onChange, onCreateTest, onActiveTest, onUpdateTest, onRemoveTest, onExecuteTest, onBuildSource: onBuildNow, onBuildAuto }];
 }

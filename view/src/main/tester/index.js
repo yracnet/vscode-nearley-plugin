@@ -7,7 +7,7 @@ export const Tester = () => {
   const [config, , event] = useConfigHandler();
   return (
     <div className="me-template">
-      <Header model={config} event={event} />
+      <Header config={config} event={event} />
       <div className="content">
         {
           config.items && config.items.map((item, ix) => (
@@ -133,10 +133,29 @@ const ItemTitle = ({ prefix = '', item, event }) => {
   )
 }
 
-const Header = ({ model: config, event }) => {
+const Header = ({ config, event }) => {
+
   return (
     <div className="header">
-      <div className="input-group input-group-sm ">
+      <div className="input-group input-group-sm mb-1">
+        <span className="input-group-text">Source File</span>
+        <input name="source"
+          value={config.source}
+          onChange={event.onChange}
+          className="form-control bg-white" />
+        <button onClick={event.onBuildNow}
+          className="btn btn-outline-danger"
+          disabled={config.auto}>
+          <i className="icon-build" />
+          Build now
+        </button>
+        <button className="btn btn-outline-primary"
+          onClick={event.onBuildAuto}>
+          <i className={config.auto?  'icon-eye' : 'icon-no-eye' }/>
+          Build auto
+        </button>
+      </div>
+      <div className="input-group input-group-sm">
         <span className="input-group-text">Grammar File</span>
         <input name="grammar"
           value={config.grammar}
