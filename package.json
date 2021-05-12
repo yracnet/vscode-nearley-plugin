@@ -29,15 +29,15 @@
 		"editor"
 	],
 	"activationEvents": [
-		"onCustomEditor:nearley-plugin.ne-run-tester",
-		"onCommand:nearley-plugin.ne-cmd-compiler"
+		"onCustomEditor:nearley-plugin.ne-test",
+		"onCommand:nearley-plugin.ne-compiler"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"customEditors": [
 			{
-				"viewType": "nearley-plugin.ne-run-tester",
-				"displayName": "Nearley Run Test",
+				"viewType": "nearley-plugin.ne-test",
+				"displayName": "Nearley View Test",
 				"selector": [
 					{
 						"filenamePattern": "*.ne-test"
@@ -48,13 +48,13 @@
 		"commands": [
 			{
 				"category": "Nearley",
-				"command": "nearley-plugin.ne-cmd-compiler",
+				"command": "nearley-plugin.ne-compiler",
 				"title": "Nearley Compiler Grammar"
 			}
 		],
 		"keybindings": [
 			{
-				"command": "nearley-plugin.ne-cmd-compiler",
+				"command": "nearley-plugin.ne-compiler",
 				"key": "Ctrl+Enter",
 				"when": "editorTextFocus"
 			}

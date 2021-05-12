@@ -28,6 +28,7 @@ const actionBuild = (source) => {
         const config = {
             source,
             grammar,
+            auto: false,
             execute: 'none',
             items: [],
             origin: 'template',

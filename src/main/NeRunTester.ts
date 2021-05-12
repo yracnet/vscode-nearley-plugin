@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { assertBinScript, createReactInfo, parseJson, getVscodeTerminal } from './util';
 import { ProcessCallback, ReactEditorProvider } from './ReactEditorProvider';
 
+export const neTestViewType = 'nearley-plugin.ne-test';
 
 export const registerRunTester = (context: vscode.ExtensionContext) => {
     const config = createReactInfo(context, 'media/index.html', 'asset-manifest.json');
@@ -52,7 +53,7 @@ export const registerRunTester = (context: vscode.ExtensionContext) => {
     provider.receiveMessage('change-state', processChangeState);
     provider.receiveMessage('execute-test', processExecuteTest);
     provider.receiveMessage('change-text', processChangeText);
-    const providerRegistration = vscode.window.registerCustomEditorProvider(ReactEditorProvider.viewType, provider);
+    const providerRegistration = vscode.window.registerCustomEditorProvider(neTestViewType, provider);
     return providerRegistration;
 }
 

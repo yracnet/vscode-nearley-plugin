@@ -17,7 +17,6 @@ export type ReceiveEvent = {
 
 
 export class ReactEditorProvider implements vscode.CustomTextEditorProvider {
-    public static readonly viewType = 'nearley-plugin.ne-run-tester';
     constructor(private readonly config: ReactInfo) { }
 
     private processEvent: ReceiveEvent[] = []
