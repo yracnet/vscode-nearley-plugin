@@ -149,8 +149,8 @@ const Header = ({ config, event }) => {
           <i className="icon-build" />
           Build now
         </button>
-        <button className="btn btn-outline-primary"
-          onClick={event.onBuildAuto}>
+        <button onClick={event.onBuildAuto}
+          className="btn btn-outline-primary">
           <i className={config.auto?  'icon-eye' : 'icon-no-eye' }/>
           Build auto
         </button>

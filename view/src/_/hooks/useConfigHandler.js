@@ -99,5 +99,5 @@ export const useConfigHandler = (init = INIT_TEST) => {
         sendMessage('build-auto', state)
     }
 
-    return [config, setConfig, { onChange, onCreateTest, onActiveTest, onUpdateTest, onRemoveTest, onExecuteTest, onBuildSource: onBuildNow, onBuildAuto }];
+    return [config, setConfig, { onChange, onCreateTest, onActiveTest, onUpdateTest, onRemoveTest, onExecuteTest, onBuildNow, onBuildAuto }];
 }
