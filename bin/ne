@@ -51,7 +51,7 @@ const actionRun = (source, output) => {
         const raw = fs.readFileSync(source);
         let config = JSON.parse(raw);
         config = executeConfig(config);
-        //writeFile(config, output);
+        writeFile(config, output);
     } catch (error) {
         console.log('Error: ', error);
     }
