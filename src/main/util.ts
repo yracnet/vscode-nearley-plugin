@@ -3,7 +3,8 @@ import * as path from "path"
 import * as vscode from 'vscode';
 
 export const assertBinScript = (name: string, context: vscode.ExtensionContext) => {
-    const binPath = path.join(vscode.workspace.rootPath || '', 'node_modules', '.bin');
+    //const binPath = path.join(vscode.workspace.rootPath || '', 'node_modules', '.bin');
+    const binPath = path.join(vscode.workspace.rootPath || './');
     const neScript = path.join(binPath, name)
     if (!fs.existsSync(neScript)) {
         fs.mkdirSync(binPath, { recursive: true });
