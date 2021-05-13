@@ -11,6 +11,7 @@ try {
 var cp = require('child_process');
 const fs = require('fs');
 const opts = require('commander');
+const { isTemplateMiddle } = require('typescript');
 
 
 //=====================================================================
@@ -20,7 +21,7 @@ const actionBuild = (source, grammar) => {
         console.log('Error: Ne-Build require a file with ".ne" as source.')
         process.exit(1)
     }
-    grammar = grammar? grammar : source.replace('.ne', '.js');
+    grammar = grammar ? grammar : source.replace('.ne', '.js');
     console.log('Source: ', source);
     console.log('Grammar: ', grammar);
     const output = grammar.replace('.js', '.ne-test');
@@ -50,8 +51,8 @@ const actionRun = (source, output) => {
     try {
         const raw = fs.readFileSync(source);
         let config = JSON.parse(raw);
-        config = executeRun(config);
-        writeFile(config, output);
+        config = executeConfig(config);
+        //writeFile(config, output);
     } catch (error) {
         console.log('Error: ', error);
     }
@@ -59,41 +60,58 @@ const actionRun = (source, output) => {
 
 //=====================================================================
 
-const executeRun = (config) => {
+
+const executeItem = (item, grammar) => {
+    const parser = new nearley.Parser(grammar, { keepHistory: item.trace });
+    console.log('Execute :', item.name);
+    console.log('Content :', item.content);
+    item.start = Date.now();
+    item.status = 'success'
+    try {
+        parser.feed(item.content);
+        item.results = parser.results
+        item.traces = item.trace ? parser.table.map((column, index) => ({
+            index,
+            charAt: item.content[index],
+            rules: column.states.map((state, stateIndex) => stateIndex + ": " + state.toString())
+        })) : []
+        item.output = ''
+    } catch (error) {
+        item.status = 'error'
+        item.output = error.toString()
+        item.results = []
+        item.traces = []
+    }
+    console.log('  Status:', item.status);
+    console.log('  Result:', item.results);
+    console.log('  Output:', item.output);
+    console.log('  Traces:', item.traces);
+    item.finish = Date.now();
+    item.time = item.finish - item.start;
+    return item;
+}
+
+//const executeWorkerItem = (item, grammar) => {
+//    return new Promise((resolve, reject) => {
+//        setTimeout(() => reject(item), 1);
+//        item = executeItem(item, grammar);
+//        resolve(item);
+//    });
+//}
+
+const executeConfig = (config) => {
     const source = require(config.grammar);
     const grammar = nearley.Grammar.fromCompiled(source)
     config.start = Date.now();
     config.items = config.items
-        .map(item => {
+        .map((item) => {
             if (item.id === config.execute || config.execute === 'ALL') {
-                const parser = new nearley.Parser(grammar, { keepHistory: item.trace });
-                console.log('Execute :', item.name);
-                console.log('Content :', item.content);
-                item.start = Date.now();
-                item.status = 'success'
-                try {
-                    parser.feed(item.content);
-                    item.results = parser.results
-                    item.traces = item.trace ? parser.table.map((column, index) => ({
-                        index,
-                        charAt: item.content[index],
-                        rules: column.states.map((state, stateIndex) => stateIndex + ": " + state.toString())
-                    })) : []
-                    item.output = ''
-                } catch (error) {
-                    item.status = 'error'
-                    item.output = error.toString()
-                    item.results = []
-                    item.traces = []
-                }
-                console.log('  Status:', item.status);
-                console.log('  Result:', item.results);
-                console.log('  Output:', item.output);
-                console.log('  Traces:', item.traces);
-                //item.results = JSON.stringify(item.results)
-                //item.traces = JSON.stringify(item.traces)
-                item.finish = Date.now();
-                item.time = item.finish - item.start;
+                //try {
+                item = executeItem(item, grammar);
+                //} catch {
+                //    item.status = 'error'
+                //    item.output = 'Timeout execution'
+                //}
             }
             return item;
         })

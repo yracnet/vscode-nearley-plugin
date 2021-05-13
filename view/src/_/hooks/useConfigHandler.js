@@ -10,7 +10,7 @@ const INIT_TEST = {
     source: './src/grammar.ne',
     grammar: './src/grammar.js',
     execute: 0,
-    start: 0,
+    start: Date.now(),
     finish: 0,
     items: []
 }
@@ -48,7 +48,6 @@ export const useConfigHandler = (init = INIT_TEST) => {
         })
     }, [setConfig])
 
-
     const onChange = handlerOnChange(config, setConfig, (state) => {
         state.origin = 'react';
         return state;
@@ -59,8 +58,8 @@ export const useConfigHandler = (init = INIT_TEST) => {
             id: 'TEST-' + new Date().getTime() + ':' + config.items.length,
             name: 'Simple Test',
             content: "10 + " + Math.random(),
-            start: '',
-            finish: '',
+            start: Date.now(),
+            finish: Date.now(),
             status: '',
             results: ['Ctrl+Enter for ejecute this case'],
             traces: [],
@@ -84,13 +83,32 @@ export const useConfigHandler = (init = INIT_TEST) => {
         const items = config.items.map(it => it.id === item.id ? item : it)
         setConfig({ ...config, items, origin: 'react' })
     }
+    
+    const resetItems = (items, execute)=>{
+        return items.map(it => {
+            if(it.id === execute || execute === 'ALL'){
+                it.results = []
+                it.traces = []
+                it.output = ""
+                it.start = 0
+                it.finish = 0
+                it.time = 0
+            }
+            return it;
+        });
+    }
+
     const onExecuteTest = (item) => {
         const execute = typeof item === 'string' ? item : item.id;
         const state = { ...config, execute }
+        state.items = resetItems(state.items, state.execute)
         setConfig({ ...state, origin: 'ignore' })
         sendMessage('execute-test', state)
     }
     const onBuildNow = () => {
+        const state = { ...config }
+        state.items = resetItems(state.items, state.execute)
+        setConfig({ ...state, origin: 'ignore' })
         sendMessage('build-now', config)
     }
     const onBuildAuto = () => {

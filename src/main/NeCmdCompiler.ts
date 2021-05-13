@@ -29,9 +29,11 @@ export const registerCmdCompiler = (context: vscode.ExtensionContext) => {
                 vscode.commands.executeCommand('workbench.action.editorLayoutTwoColumns')
                     .then(e => {
                         let uri = vscode.Uri.parse(fileTest);
-                        vscode.commands.executeCommand("vscode.openWith", uri, neTestViewType, {
-                            viewColumn: vscode.ViewColumn.Two
-                        })
+                        setTimeout(()=>{
+                            vscode.commands.executeCommand("vscode.openWith", uri, neTestViewType, {
+                                viewColumn: vscode.ViewColumn.Two
+                            })
+                        }, 1000)
                     })
 
             }

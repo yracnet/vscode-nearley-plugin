@@ -134,6 +134,22 @@ const ItemTitle = ({ prefix = '', item, event }) => {
   )
 }
 
+
+
+const dt = new Intl.DateTimeFormat("en-GB", {
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+});
+
+const format = (value = 0)=>{
+  try {
+    return dt.format(value) 
+  } catch {
+    return '??:??:??'
+  }
+}
+
 const Header = ({ config, event }) => {
 
   return (
@@ -144,6 +160,7 @@ const Header = ({ config, event }) => {
           value={config.source}
           onChange={event.onChange}
           className="form-control bg-white" />
+          <span className="time input-group-text bg-white">{format(config.start)}</span>
         <button onClick={event.onBuildNow}
           className="btn btn-outline-danger"
           disabled={config.auto}>
