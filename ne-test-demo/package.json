@@ -1,0 +1,12 @@
+{
+  "name": "ne-test-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "nearley": "^2.20.1"
+  },
+  "devDependencies": {
+    "ne-test-client": "file:../ne-test-client"
+  }
+}

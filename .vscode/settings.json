@@ -1,16 +1,8 @@
 {
-    "files.exclude": {
-        "node_modules": false,
-        "**/.eslintrc.json": true,
-        "**/.vscodeignore": false,
-        "**/.yarnrc": true,
-        "**/*.md": false,
-        "**/yarn.lock": true,
-        "**/view": true,
-        "**/out": false
-    },
-    "search.exclude": {
-        "out": true
-    },
-    "typescript.tsc.autoDetect": "off"
+    "editor.formatOnSave": true,    
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true,
+      "source.sortMembers": true
+    }
 }

@@ -1,0 +1,16 @@
+{
+  "folders": [
+	{
+		"path": "ne-test-client"
+	},
+	{
+		"path": "ne-test-editor"
+	},
+	{
+		"path": "ne-test-vscode"
+	}
+],
+  "settings": {
+    "typescript.tsc.autoDetect": "off"
+  }
+}

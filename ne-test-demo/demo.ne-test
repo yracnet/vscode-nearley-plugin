@@ -1,0 +1,243 @@
+{
+  "config": {
+    "source": "demo.ne",
+    "target": "demo.js",
+    "createAt": "2023-03-23T15:25:53.279Z",
+    "time": 2,
+    "runTime": "00:00:00.004",
+    "buildTime": "00:00:00.908"
+  },
+  "items": [
+    {
+      "id": "9ea5f4cd-1705-45ab-a382-f2b37e8baf24",
+      "name": "Test f2b37e8baf24",
+      "input": "1+2",
+      "output": [
+        3
+      ],
+      "status": "success",
+      "open": false,
+      "trace": false,
+      "traces": [
+        {
+          "index": 0,
+          "charAt": "1",
+          "rules": [
+            "0: {main →  ● _ expression _}, from: 0",
+            "1: {_ →  ● _$ebnf$1}, from: 0",
+            "2: {_$ebnf$1 →  ● }, from: 0",
+            "3: {_$ebnf$1 →  ● _$ebnf$1 /[\\s\\n\\r\\t]/}, from: 0",
+            "4: {_ → _$ebnf$1 ● }, from: 0",
+            "5: {_$ebnf$1 → _$ebnf$1 ● /[\\s\\n\\r\\t]/}, from: 0",
+            "6: {main → _ ● expression _}, from: 0",
+            "7: {expression →  ● number _ \"+\" _ number}, from: 0",
+            "8: {expression →  ● number _ \"-\" _ number}, from: 0",
+            "9: {expression →  ● number _ \"*\" _ number}, from: 0",
+            "10: {expression →  ● number _ \"/\" _ number}, from: 0",
+            "11: {number →  ● number$ebnf$1}, from: 0",
+            "12: {number$ebnf$1 →  ● /[0-9]/}, from: 0",
+            "13: {number$ebnf$1 →  ● number$ebnf$1 /[0-9]/}, from: 0"
+          ]
+        },
+        {
+          "index": 1,
+          "charAt": "+",
+          "rules": [
+            "0: {number$ebnf$1 → /[0-9]/ ● }, from: 0",
+            "1: {number$ebnf$1 → number$ebnf$1 ● /[0-9]/}, from: 0",
+            "2: {number → number$ebnf$1 ● }, from: 0",
+            "3: {expression → number ● _ \"/\" _ number}, from: 0",
+            "4: {expression → number ● _ \"*\" _ number}, from: 0",
+            "5: {expression → number ● _ \"-\" _ number}, from: 0",
+            "6: {expression → number ● _ \"+\" _ number}, from: 0",
+            "7: {_ →  ● _$ebnf$1}, from: 1",
+            "8: {_$ebnf$1 →  ● }, from: 1",
+            "9: {_$ebnf$1 →  ● _$ebnf$1 /[\\s\\n\\r\\t]/}, from: 1",
+            "10: {_ → _$ebnf$1 ● }, from: 1",
+            "11: {_$ebnf$1 → _$ebnf$1 ● /[\\s\\n\\r\\t]/}, from: 1",
+            "12: {expression → number _ ● \"+\" _ number}, from: 0",
+            "13: {expression → number _ ● \"-\" _ number}, from: 0",
+            "14: {expression → number _ ● \"*\" _ number}, from: 0",
+            "15: {expression → number _ ● \"/\" _ number}, from: 0"
+          ]
+        },
+        {
+          "index": 2,
+          "charAt": "2",
+          "rules": [
+            "0: {expression → number _ \"+\" ● _ number}, from: 0",
+            "1: {_ →  ● _$ebnf$1}, from: 2",
+            "2: {_$ebnf$1 →  ● }, from: 2",
+            "3: {_$ebnf$1 →  ● _$ebnf$1 /[\\s\\n\\r\\t]/}, from: 2",
+            "4: {_ → _$ebnf$1 ● }, from: 2",
+            "5: {_$ebnf$1 → _$ebnf$1 ● /[\\s\\n\\r\\t]/}, from: 2",
+            "6: {expression → number _ \"+\" _ ● number}, from: 0",
+            "7: {number →  ● number$ebnf$1}, from: 2",
+            "8: {number$ebnf$1 →  ● /[0-9]/}, from: 2",
+            "9: {number$ebnf$1 →  ● number$ebnf$1 /[0-9]/}, from: 2"
+          ]
+        },
+        {
+          "index": 3,
+          "rules": [
+            "0: {number$ebnf$1 → /[0-9]/ ● }, from: 2",
+            "1: {number$ebnf$1 → number$ebnf$1 ● /[0-9]/}, from: 2",
+            "2: {number → number$ebnf$1 ● }, from: 2",
+            "3: {expression → number _ \"+\" _ number ● }, from: 0",
+            "4: {main → _ expression ● _}, from: 0",
+            "5: {_ →  ● _$ebnf$1}, from: 3",
+            "6: {_$ebnf$1 →  ● }, from: 3",
+            "7: {_$ebnf$1 →  ● _$ebnf$1 /[\\s\\n\\r\\t]/}, from: 3",
+            "8: {_ → _$ebnf$1 ● }, from: 3",
+            "9: {_$ebnf$1 → _$ebnf$1 ● /[\\s\\n\\r\\t]/}, from: 3",
+            "10: {main → _ expression _ ● }, from: 0"
+          ]
+        }
+      ],
+      "time": 0,
+      "runTime": "00:00:00.000"
+    },
+    {
+      "id": "01",
+      "name": "suma",
+      "input": "1+25g",
+      "results": [
+        3
+      ],
+      "traces": [
+        {
+          "index": 0,
+          "charAt": "1",
+          "rules": [
+            "0: {main →  ● _ expression _}, from: 0",
+            "1: {_ →  ● _$ebnf$1}, from: 0",
+            "2: {_$ebnf$1 →  ● }, from: 0",
+            "3: {_$ebnf$1 →  ● _$ebnf$1 /[\\s\\n\\r\\t]/}, from: 0",
+            "4: {_ → _$ebnf$1 ● }, from: 0",
+            "5: {_$ebnf$1 → _$ebnf$1 ● /[\\s\\n\\r\\t]/}, from: 0",
+            "6: {main → _ ● expression _}, from: 0",
+            "7: {expression →  ● number _ \"+\" _ number}, from: 0",
+            "8: {expression →  ● number _ \"-\" _ number}, from: 0",
+            "9: {expression →  ● number _ \"*\" _ number}, from: 0",
+            "10: {expression →  ● number _ \"/\" _ number}, from: 0",
+            "11: {number →  ● number$ebnf$1}, from: 0",
+            "12: {number$ebnf$1 →  ● /[0-9]/}, from: 0",
+            "13: {number$ebnf$1 →  ● number$ebnf$1 /[0-9]/}, from: 0"
+          ]
+        },
+        {
+          "index": 1,
+          "charAt": "+",
+          "rules": [
+            "0: {number$ebnf$1 → /[0-9]/ ● }, from: 0",
+            "1: {number$ebnf$1 → number$ebnf$1 ● /[0-9]/}, from: 0",
+            "2: {number → number$ebnf$1 ● }, from: 0",
+            "3: {expression → number ● _ \"/\" _ number}, from: 0",
+            "4: {expression → number ● _ \"*\" _ number}, from: 0",
+            "5: {expression → number ● _ \"-\" _ number}, from: 0",
+            "6: {expression → number ● _ \"+\" _ number}, from: 0",
+            "7: {_ →  ● _$ebnf$1}, from: 1",
+            "8: {_$ebnf$1 →  ● }, from: 1",
+            "9: {_$ebnf$1 →  ● _$ebnf$1 /[\\s\\n\\r\\t]/}, from: 1",
+            "10: {_ → _$ebnf$1 ● }, from: 1",
+            "11: {_$ebnf$1 → _$ebnf$1 ● /[\\s\\n\\r\\t]/}, from: 1",
+            "12: {expression → number _ ● \"+\" _ number}, from: 0",
+            "13: {expression → number _ ● \"-\" _ number}, from: 0",
+            "14: {expression → number _ ● \"*\" _ number}, from: 0",
+            "15: {expression → number _ ● \"/\" _ number}, from: 0"
+          ]
+        },
+        {
+          "index": 2,
+          "charAt": "2",
+          "rules": [
+            "0: {expression → number _ \"+\" ● _ number}, from: 0",
+            "1: {_ →  ● _$ebnf$1}, from: 2",
+            "2: {_$ebnf$1 →  ● }, from: 2",
+            "3: {_$ebnf$1 →  ● _$ebnf$1 /[\\s\\n\\r\\t]/}, from: 2",
+            "4: {_ → _$ebnf$1 ● }, from: 2",
+            "5: {_$ebnf$1 → _$ebnf$1 ● /[\\s\\n\\r\\t]/}, from: 2",
+            "6: {expression → number _ \"+\" _ ● number}, from: 0",
+            "7: {number →  ● number$ebnf$1}, from: 2",
+            "8: {number$ebnf$1 →  ● /[0-9]/}, from: 2",
+            "9: {number$ebnf$1 →  ● number$ebnf$1 /[0-9]/}, from: 2"
+          ]
+        },
+        {
+          "index": 3,
+          "charAt": "5",
+          "rules": [
+            "0: {number$ebnf$1 → /[0-9]/ ● }, from: 2",
+            "1: {number$ebnf$1 → number$ebnf$1 ● /[0-9]/}, from: 2",
+            "2: {number → number$ebnf$1 ● }, from: 2",
+            "3: {expression → number _ \"+\" _ number ● }, from: 0",
+            "4: {main → _ expression ● _}, from: 0",
+            "5: {_ →  ● _$ebnf$1}, from: 3",
+            "6: {_$ebnf$1 →  ● }, from: 3",
+            "7: {_$ebnf$1 →  ● _$ebnf$1 /[\\s\\n\\r\\t]/}, from: 3",
+            "8: {_ → _$ebnf$1 ● }, from: 3",
+            "9: {_$ebnf$1 → _$ebnf$1 ● /[\\s\\n\\r\\t]/}, from: 3",
+            "10: {main → _ expression _ ● }, from: 0"
+          ]
+        },
+        {
+          "index": 4,
+          "charAt": "g",
+          "rules": [
+            "0: {number$ebnf$1 → number$ebnf$1 /[0-9]/ ● }, from: 2",
+            "1: {number$ebnf$1 → number$ebnf$1 ● /[0-9]/}, from: 2",
+            "2: {number → number$ebnf$1 ● }, from: 2",
+            "3: {expression → number _ \"+\" _ number ● }, from: 0",
+            "4: {main → _ expression ● _}, from: 0",
+            "5: {_ →  ● _$ebnf$1}, from: 4",
+            "6: {_$ebnf$1 →  ● }, from: 4",
+            "7: {_$ebnf$1 →  ● _$ebnf$1 /[\\s\\n\\r\\t]/}, from: 4",
+            "8: {_ → _$ebnf$1 ● }, from: 4",
+            "9: {_$ebnf$1 → _$ebnf$1 ● /[\\s\\n\\r\\t]/}, from: 4",
+            "10: {main → _ expression _ ● }, from: 0"
+          ]
+        },
+        {
+          "index": 5,
+          "rules": []
+        }
+      ],
+      "status": "error",
+      "time": 1,
+      "output": [
+        "Error: Syntax error at line 1 col 5:\n\n1 1+25g\n      ^\n\nUnexpected \"g\". Instead, I was expecting to see one of the following:\n\nA character matching /[0-9]/ based on:\n    number$ebnf$1 → number$ebnf$1 ● /[0-9]/\n    number →  ● number$ebnf$1\n    expression → number _ \"+\" _ ● number\n    main → _ ● expression _\nA character matching /[\\s\\n\\r\\t]/ based on:\n    _$ebnf$1 → _$ebnf$1 ● /[\\s\\n\\r\\t]/\n    _ →  ● _$ebnf$1\n    main → _ expression ● _\n"
+      ],
+      "open": true,
+      "trace": true,
+      "runTime": "00:00:00.001"
+    },
+    {
+      "id": "02",
+      "name": "suma2",
+      "input": " 10 - 100",
+      "open": false,
+      "output": [
+        -90
+      ],
+      "traces": [],
+      "status": "success",
+      "time": 0,
+      "runTime": "00:00:00.000",
+      "trace": false
+    },
+    {
+      "id": "83068644-3b32-4f8a-b681-6aeba4008114",
+      "name": "Test 6aeba4008114",
+      "input": "1+ 2",
+      "output": [
+        3
+      ],
+      "status": "success",
+      "open": false,
+      "trace": false,
+      "traces": [],
+      "time": 0,
+      "runTime": "00:00:00.000"
+    }
+  ]
+}

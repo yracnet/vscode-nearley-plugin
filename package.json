@@ -1,86 +1,11 @@
 {
-	"name": "nearley-plugin",
-	"displayName": "Nearley Plugin",
-	"description": "Nearley compile and test files - with trace",
-	"icon": "logo.png",
-	"version": "0.0.5",
-	"publisher": "yracnet",
-	"author": {
-		"name": "Willyams Yujra",
-		"email": "yracnet@gmail.com"
-	},
-	"homepage": "https://github.com/yracnet/vscode-nearley-plugin",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/yracnet/vscode-nearley-plugin"
-	},
-	"license": "MIT",
-	"engines": {
-		"vscode": "^1.55.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"keywords": [
-		"react",
-		"nearley",
-		"compile",
-		"tester",
-		"editor"
-	],
-	"activationEvents": [
-		"onCustomEditor:nearley-plugin.ne-test",
-		"onCommand:nearley-plugin.ne-compiler"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"customEditors": [
-			{
-				"viewType": "nearley-plugin.ne-test",
-				"displayName": "Nearley View Test",
-				"selector": [
-					{
-						"filenamePattern": "*.ne-test"
-					}
-				]
-			}
-		],
-		"commands": [
-			{
-				"category": "Nearley",
-				"command": "nearley-plugin.ne-compiler",
-				"title": "Nearley Compiler Grammar"
-			}
-		],
-		"keybindings": [
-			{
-				"command": "nearley-plugin.ne-compiler",
-				"key": "Ctrl+Enter",
-				"when": "editorTextFocus"
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "yarn run compile:view && yarn run compile",
-		"compile:view": "cd view && yarn run build:vscode",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"pretest": "yarn run compile && yarn run lint",
-		"lint": "eslint src --ext ts",
-		"test": "node ./out/test/runTest.js"
-	},
-	"devDependencies": {
-		"@types/glob": "^7.1.3",
-		"@types/mocha": "^8.0.4",
-		"@types/node": "^12.11.7",
-		"@types/vscode": "^1.55.0",
-		"@typescript-eslint/eslint-plugin": "^4.14.1",
-		"@typescript-eslint/parser": "^4.14.1",
-		"eslint": "^7.19.0",
-		"glob": "^7.1.6",
-		"mocha": "^8.2.1",
-		"typescript": "^4.1.3",
-		"vscode-test": "^1.5.0"
-	},
-	"dependencies": {}
+  "name": "ne-test",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "ne-test-client",
+    "ne-test-editor",
+    "ne-test-vscode"
+  ]
 }

@@ -1,0 +1,49 @@
+import { writeFileSync } from "fs";
+import * as path from "path";
+import * as vscode from "vscode";
+import { ReactEditorProvider, VSCReducer } from "./ReactEditorProvider";
+import { createEditorConfig, getVscodeTerminal } from "./util";
+
+const reducer: VSCReducer<string> = (file, content, action, postMessage) => {
+  const { type, value, payload } = action;
+  //@ts-ignore
+  const rootPath = vscode.workspace.rootPath || "./";
+  if (type === "editor:load") {
+    postMessage({ type: "document:open", payload: content });
+  } else if (type === "editor:change") {
+    content = payload;
+  } else if (type === "run:build") {
+    writeFileSync(file, payload);
+    const state: any = JSON.parse(payload);
+    const source = path.resolve(rootPath, state.config.source);
+    const target = path.resolve(rootPath, state.config.target);
+    const terminal = getVscodeTerminal();
+    terminal.show(true);
+    terminal.sendText(`npx ne-test build '${source}' '${target}'`);
+  } else if (type === "run:all") {
+    writeFileSync(file, payload);
+    const terminal = getVscodeTerminal();
+    terminal.show(true);
+    terminal.sendText(`npx ne-test run '${file}' '${file}'`);
+  } else if (type === "run:item") {
+    writeFileSync(file, payload);
+    const terminal = getVscodeTerminal();
+    terminal.show(true);
+    terminal.sendText(`npx ne-test run '${file}' '${file}' --test ${value}`);
+  } else {
+    console.log(">>>>VSCODE_REDUCER_SKIP: ", type);
+  }
+  return content;
+};
+
+export const neTestViewType = "nearley-plugin.ne-test";
+
+export const registerEditorTester = (context: vscode.ExtensionContext) => {
+  const config = createEditorConfig(context);
+  const neTestEditorProvider = new ReactEditorProvider(config, reducer);
+  const providerRegistration = vscode.window.registerCustomEditorProvider(
+    neTestViewType,
+    neTestEditorProvider
+  );
+  return providerRegistration;
+};
