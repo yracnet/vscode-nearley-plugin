@@ -3,19 +3,23 @@ import path from "path";
 import { performance } from "perf_hooks";
 import { readObjectSync, writeObjectSync } from "../lib/help";
 
-export const commandRun = (source: string, output: string, option: any) => {
+export const commandRun = (source: string, option: any) => {
   console.log("RUN");
   if (!source.endsWith(".ne-test")) {
     console.log('Error: Ne-Run require a file with ".ne-test" as source.');
     process.exit(1);
   }
-  output = output ? output : source.replace(".ne-test", ".ne-out");
   console.log("Source  :", source);
-  console.log("Output  :", output);
   console.log("Option  :", option);
+  let {
+    // Options
+    output = source.replace(".ne-test", ".ne-out"),
+    item = "all",
+  } = option;
+
   try {
     let state = readObjectSync(source);
-    state = executeTest(state.config, state.items, option.test);
+    state = executeTest(state.config, state.items, item);
     writeObjectSync(state, output);
   } catch (error) {
     console.log("Error   :", error);
