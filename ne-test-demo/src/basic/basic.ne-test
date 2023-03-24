@@ -1,7 +1,7 @@
 {
   "config": {
-    "source": "demo.ne",
-    "target": "demo.js",
+    "source": "src/basic/basic.ne",
+    "target": "src/basic/index.js",
     "createAt": "2023-03-23T15:25:53.279Z",
     "time": 2,
     "runTime": "00:00:00.004",

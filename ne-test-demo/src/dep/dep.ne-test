@@ -1,0 +1,20 @@
+{
+  "version": "0.1.1",
+  "created": "1679660982560",
+  "config": {
+    "source": "src/dep/dep.ne",
+    "target": "src/dep/dep.js"
+  },
+  "items": [
+    {
+      "id": "01",
+      "name": "suma",
+      "input": " 1 + 2 "
+    },
+    {
+      "id": "02",
+      "name": "suma2",
+      "input": " 10 - 100 "
+    }
+  ]
+}
