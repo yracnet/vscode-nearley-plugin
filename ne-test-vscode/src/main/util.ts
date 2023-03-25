@@ -79,9 +79,8 @@ const createEditorConfig_PROD: FNPageConfig = (
 ) => {
   const fileUri = vscode.Uri.joinPath(context.extensionUri, "media", fileName);
   const content = fs.readFileSync(fileUri.fsPath, {}).toString();
-
   const urlRoot = vscode.Uri.joinPath(context.extensionUri, "media");
-  const urlContent = content.replace(/\/VSCODE_ROOT_URI/g, urlRoot.toString());
+  const urlContent = content.replace(/\/VSCODE_ROOT_URI/g, "/WEBVIEW_URI");
   return { urlRoot, urlContent };
 };
 

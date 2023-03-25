@@ -25,14 +25,16 @@ export class ReactEditorProvider implements vscode.CustomTextEditorProvider {
     _token: vscode.CancellationToken
   ): Promise<void> {
     assertNeTestClient();
+
     const webview = panel.webview;
     const { urlContent, urlRoot } = this.config;
-    const webviewParentUri = webview.asWebviewUri(urlRoot);
     webview.options = {
       enableScripts: true,
-      localResourceRoots: [webviewParentUri, urlRoot],
+      localResourceRoots: [urlRoot],
     };
-    webview.html = urlContent;
+    const WEBVIEW_URI = panel.webview.asWebviewUri(urlRoot).toString();
+    webview.html = urlContent.replace(/\/WEBVIEW_URI/g, WEBVIEW_URI);
+
     const postMessage = (action: any) => {
       // console.log(">>>VSCODE: postMessage", action.type);
       webview.postMessage(action);
