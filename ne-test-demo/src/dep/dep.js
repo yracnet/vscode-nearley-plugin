@@ -25,6 +25,6 @@ var grammar = {
 if (typeof module !== 'undefined'&& typeof module.exports !== 'undefined') {
    module.exports = grammar;
 } else {
-   window.dep1 = grammar;
+   window.dep = grammar;
 }
 })();

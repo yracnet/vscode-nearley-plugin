@@ -1,36 +1,34 @@
 {
   "config": {
-    "source": "./src/calc/calc.ne",
-    "target": "./src/calc/calc.js",
-    "runTime": "00:00:00.003",
-    "buildTime": "00:00:00.886"
+    "source": "src/calc/calc.ne",
+    "target": "src/calc/calc.js",
+    "buildTime": "00:00:00.910",
+    "runTime": "00:00:00.002"
   },
   "items": [
     {
-      "id": "e27969ab-a2fd-4ca5-8eca-93221cda0f12",
-      "name": "Suma Decimal",
-      "input": "1+1.225",
-      "output": [
-        2.225
-      ],
-      "status": "success",
+      "id": "01",
+      "name": "suma",
+      "input": " 1 + 2 +3",
       "open": true,
-      "trace": false,
+      "output": [
+        6
+      ],
       "traces": [],
+      "status": "success",
       "runTime": "00:00:00.000"
     },
     {
-      "id": "4596e34e-7711-4b00-bfac-177af84f3520",
-      "name": "Suma Enteros",
-      "input": "100 - 222",
+      "id": "02",
+      "name": "suma2",
+      "input": " 10 - 100 +2034",
       "output": [
-        -122
+        1944
       ],
-      "status": "success",
-      "open": true,
-      "trace": false,
       "traces": [],
-      "runTime": "00:00:00.000"
+      "status": "success",
+      "runTime": "00:00:00.001",
+      "open": true
     }
   ]
 }

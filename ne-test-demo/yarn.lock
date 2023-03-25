@@ -23,7 +23,7 @@ moo@^0.5.0:
   integrity sha512-iSAJLHYKnX41mKcJKjqvnAN9sf0LMDTXDEvFv+ffuRR9a1MIuXLjMNL6EsnDHSkKLTWNqQQ5uo61P4EbU4NU+Q==
 
 "ne-test-client@file:../ne-test-client":
-  version "0.1.1"
+  version "0.1.2"
   dependencies:
     commander "^10.0.0"
     nearley "^2.20.1"
