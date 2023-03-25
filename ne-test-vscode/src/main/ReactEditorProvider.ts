@@ -34,7 +34,7 @@ export class ReactEditorProvider implements vscode.CustomTextEditorProvider {
     };
     webview.html = urlContent;
     const postMessage = (action: any) => {
-      console.log(">>>VSCODE: postMessage", action.type);
+      // console.log(">>>VSCODE: postMessage", action.type);
       webview.postMessage(action);
     };
     let currentFile: string = document.fileName;
@@ -42,7 +42,7 @@ export class ReactEditorProvider implements vscode.CustomTextEditorProvider {
 
     const onDidReceiveMessage = webview.onDidReceiveMessage(
       async (action: any) => {
-        console.log(">>>VSCODE: receiveMessage", action.type);
+        // console.log(">>>VSCODE: receiveMessage", action.type);
         currentContent = await this.reducer(
           currentFile,
           currentContent,

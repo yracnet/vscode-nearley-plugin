@@ -36,5 +36,5 @@ const pipelineBuild = (project, source, target) => {
   );
 };
 Promise.resolve(true)
-  .then(() => pipelineBuild("../ne-test-client", "bin", "./bin"))
+  // .then(() => pipelineBuild("../ne-test-client", "bin", "./bin"))
   .then(() => pipelineBuild("../ne-test-editor", "dist", "./media"));

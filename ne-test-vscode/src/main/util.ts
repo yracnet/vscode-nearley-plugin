@@ -42,7 +42,9 @@ export const getVscodeTerminal = () => {
   if (terminal) {
     terminal.dispose();
   }
-  return vscode.window.createTerminal(TITLE_TERMINAL);
+  terminal = vscode.window.createTerminal(TITLE_TERMINAL);
+  terminal.show(true);
+  return terminal;
 };
 
 type FNPageConfig = (

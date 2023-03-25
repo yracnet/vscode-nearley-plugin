@@ -4,34 +4,43 @@ import * as vscode from "vscode";
 import { ReactEditorProvider, VSCReducer } from "./ReactEditorProvider";
 import { createEditorConfig, getVscodeTerminal } from "./util";
 
-const reducer: VSCReducer<string> = (file, content, action, postMessage) => {
+const reducer: VSCReducer<string> = (
+  fileName,
+  content,
+  action,
+  postMessage
+) => {
   const { type, value, payload } = action;
   //@ts-ignore
   const rootPath = vscode.workspace.rootPath || "./";
+  const fileRelative = vscode.workspace.asRelativePath(fileName);
+
   if (type === "editor:load") {
     postMessage({ type: "document:open", payload: content });
   } else if (type === "editor:change") {
     content = payload;
   } else if (type === "run:build") {
-    writeFileSync(file, payload);
+    writeFileSync(fileName, payload);
     const state: any = JSON.parse(payload);
     const source = path.resolve(rootPath, state.config.source);
     const target = path.resolve(rootPath, state.config.target);
     const terminal = getVscodeTerminal();
     terminal.show(true);
-    terminal.sendText(`npx ne-test build '${source}' '${target}'`);
+    terminal.sendText(`npx ne-test build '${source}' -o '${target}'`);
   } else if (type === "run:all") {
-    writeFileSync(file, payload);
+    writeFileSync(fileName, payload);
     const terminal = getVscodeTerminal();
     terminal.show(true);
-    terminal.sendText(`npx ne-test run '${file}' '${file}'`);
+    terminal.sendText(`npx ne-test run '${fileRelative}' -o '${fileRelative}'`);
   } else if (type === "run:item") {
-    writeFileSync(file, payload);
+    writeFileSync(fileName, payload);
     const terminal = getVscodeTerminal();
     terminal.show(true);
-    terminal.sendText(`npx ne-test run '${file}' '${file}' --test ${value}`);
+    terminal.sendText(
+      `npx ne-test run '${fileRelative}' -o '${fileRelative}' -i ${value}`
+    );
   } else {
-    console.log(">>>>VSCODE_REDUCER_SKIP: ", type);
+    // console.log(">>>>VSCODE_REDUCER_SKIP: ", type);
   }
   return content;
 };
